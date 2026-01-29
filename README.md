@@ -1,0 +1,1 @@
+# minakshi_project_resources
