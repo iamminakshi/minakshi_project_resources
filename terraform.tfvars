@@ -9,3 +9,5 @@ resource_groups = {
   rg2 = { name = "manthan-db" }
   rg3 = { name = "manthan-net" }
 }
+
+
