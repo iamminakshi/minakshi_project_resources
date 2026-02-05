@@ -1,0 +1,38 @@
+name: Terraform Azure Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_CLIENT_ID: 65cd5681-f55a-4f28-8974-a702831886ce
+      ARM_TENANT_ID: 0e1c81a8-6c88-4595-b678-60bce7c776f3
+      ARM_SUBSCRIPTION_ID: a9d94a25-6447-4066-bea9-a2f8668c6597
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve -input=false
